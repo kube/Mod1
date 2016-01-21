@@ -1,6 +1,15 @@
 
+      #########.           ##*
+     ########",#:         ##***
+   #########',##".       ##**:**
+  ## ## ## .##',##.     ##** ::**
+   ## ## ## # ##",#.   ##**   ::**
+    ## ## ## ## ##'   ##**     ::**
+     ## ## ## :##    ###########::**
+      ## ## ## #     ':::::::::::::/
+
 NAME := mod1
-INCLUDEFOLDERS := -I include/ -I$(HOME)/Lib/SDL2/include
+INCLUDEFOLDERS := -I./include/
 
 SOURCES_FOLDER := src/
 OBJECTS_FOLDER := obj/
@@ -8,7 +17,7 @@ OBJECTS_FOLDER := obj/
 vpath %.cpp src
 
 CFLAGS := -Wall -Werror -Wextra
-LDFLAGS := -L$(HOME)/Lib/SDL2/lib -lSDL2 -framework OpenGL
+LDFLAGS := -lSDL2 -framework OpenGL
 
 SOURCES := \
 			Matrix.cpp		\
@@ -39,7 +48,7 @@ all: $(NAME)
 
 obj/%.o: %.cpp
 	@mkdir -p $(dir $@)
-	@$(CXX) $(CFLAGS) $(INCLUDEFOLDERS) -c $(subst __,/,$<) -o $@
+	@$(CXX) $(CFLAGS) $(INCLUDEFOLDERS) -c $< -o $@
 	@printf "$(OK_COLOR)✓ $(NO_COLOR)"
 	@echo $<
 

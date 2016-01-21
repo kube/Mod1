@@ -1,0 +1,26 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"SublimeLinter": {
+		"linters": {
+			"clang": {
+				"extra_flags": "-Wall -Werror -Wextra",
+				"include_dirs": [
+					"${project_folder}/include"
+				]
+			}
+		}
+	},
+	"build_systems":
+	[
+		{
+			"name": "Run",
+			"working_dir": "${project_path}",
+			"cmd": ["./mod1"]
+		}
+	]
+}

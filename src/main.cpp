@@ -1,15 +1,23 @@
+
+      /*#######.           ##*
+     ########",#:         ##***
+   #########',##".       ##**:**
+  ## ## ## .##',##.     ##** ::**
+   ## ## ## # ##",#.   ##**   ::**
+    ## ## ## ## ##'   ##**     ::**
+     ## ## ## :##    ###########::**
+      ## ## ## #     '::::::::::::*/
+
 #include <iostream>
 #include <vector>
 #include <cstring>
 #include <SDL2/SDL.h>
 #include <OpenGL/gl3.h>
-
 #include <array>
 
 #include "Matrix.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
-
 #include "Particle.hpp"
 
 void

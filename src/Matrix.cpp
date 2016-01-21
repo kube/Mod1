@@ -1,6 +1,16 @@
-#include "Matrix.hpp"
+
+      /*#######.           ##*
+     ########",#:         ##***
+   #########',##".       ##**:**
+  ## ## ## .##',##.     ##** ::**
+   ## ## ## # ##",#.   ##**   ::**
+    ## ## ## ## ##'   ##**     ::**
+     ## ## ## :##    ###########::**
+      ## ## ## #     '::::::::::::*/
+
 #include <cstring>
 #include <cmath>
+#include "Matrix.hpp"
 
 void
 Matrix::setIdentity(float *m)
@@ -48,8 +58,7 @@ Matrix::multiply(float *m1, float *m2)
 }
 
 void
-Matrix::perspective(float *matrix, float fov, float aspect, float nearz, float farz)
-{
+Matrix::perspective(float *matrix, float fov, float aspect, float nearz, float farz) {
 	float	range;
 
 	range = tanf(fov * 0.00872664625) * nearz;
