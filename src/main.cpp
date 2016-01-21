@@ -4,9 +4,13 @@
 #include <SDL2/SDL.h>
 #include <OpenGL/gl3.h>
 
+#include <array>
+
 #include "Matrix.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
+
+#include "Particle.hpp"
 
 void
 initCube(float cube[24][7])
@@ -223,6 +227,21 @@ main(int ac, char *av[])
 
 	// Particles Initializing
 	//
+	Vec3 particles[1331];
+	int i = 0;
+	for (float x = -5.0; x <= 5.0; x += 1.0)
+	{
+		for (float y = -5.0; y <= 5.0; y += 1.0)
+		{
+			for (float z = -5.0; z <= 5.0; z += 1.0)
+			{
+				particles[i].x = x;
+				particles[i].y = y;
+				particles[i].z = z;
+				i++;
+			}
+		}
+	}
 
 	// VAOs/VBOS
 	GLuint vao, particlesVbo, cubeVbo;
@@ -242,6 +261,13 @@ main(int ac, char *av[])
 
 	// Particles VBO
 	//
+	glGenBuffers(1, &particlesVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, particlesVbo);
+	glBufferData(GL_ARRAY_BUFFER, 1331 * 7 * sizeof(float), reinterpret_cast<float*>(particles), GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,  7 * sizeof(float), 0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid *)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// Shaders
 	t_shader s = Shader::load_shaders(static_cast<const char *>("shaders/basic.vert.glsl"), static_cast<const char *>("shaders/basic.frag.glsl"));
@@ -249,7 +275,7 @@ main(int ac, char *av[])
 	// Camera/Matrix Setup
 	Camera camera(0.0, 0.0, 40.0);
 	float projection[16], model[16], view[16];
-	Matrix::perspective(projection, 45.0, 1.0, 0.01, 1000.0);
+	Matrix::perspective(projection, 45.0, 1.0, 0.01, 1000000000000.0);
 
 
 	//// Main Loop
@@ -281,11 +307,16 @@ main(int ac, char *av[])
 		glBindBuffer(GL_ARRAY_BUFFER, cubeVbo);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,  7 * sizeof(float), 0);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid *)(3 * sizeof(float)));
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid *)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
 		glDrawArrays(GL_LINES, 0, 24);
 		// Particles
-		//
+		glBindBuffer(GL_ARRAY_BUFFER, particlesVbo);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,  7 * sizeof(float), 0);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid *)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+		glDrawArrays(GL_POINTS, 0, 1331);
 
 		// Refresh
 		SDL_GL_SwapWindow(win);

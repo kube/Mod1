@@ -1,19 +1,21 @@
 
 NAME := mod1
-INCLUDEFOLDERS := -I include/
+INCLUDEFOLDERS := -I include/ -I$(HOME)/Lib/SDL2/include
 
 SOURCES_FOLDER := src/
 OBJECTS_FOLDER := obj/
 
 vpath %.cpp src
 
-CFLAGS := -Wall -Werror -Wextra -I$(HOME)/Lib/SDL2/include
+CFLAGS := -Wall -Werror -Wextra
 LDFLAGS := -L$(HOME)/Lib/SDL2/lib -lSDL2 -framework OpenGL
 
 SOURCES := \
 			Matrix.cpp		\
 			Shader.cpp		\
+			Vec3.cpp		\
 			Camera.cpp		\
+			Particle.cpp	\
 			main.cpp		\
 
 OBJECTS := $(SOURCES:.cpp=.o)
